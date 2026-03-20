@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/store_interior-MLVKN2VV_1.webp",
+        "heading": "Welcome to Our Store",
+        "subtext": "Discover the latest trends and shop your favorite styles.",
+        "button_label": "Shop Now",
+        "button_link": ""
+      }
+    },
+    "featured_collections_3UztX9": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_HwVUDG": {
+          "type": "collection",
+          "settings": {
+            "collection": "collection-2"
+          }
+        },
+        "collection_Hcje84": {
+          "type": "collection",
+          "settings": {
+            "collection": "collection-3"
+          }
+        },
+        "collection_Vx64be": {
+          "type": "collection",
+          "settings": {
+            "collection": "collection-4"
+          }
+        },
+        "collection_hwfkCG": {
+          "type": "collection",
+          "settings": {
+            "collection": "collection-1"
+          }
+        }
+      },
+      "block_order": [
+        "collection_HwVUDG",
+        "collection_Hcje84",
+        "collection_Vx64be",
+        "collection_hwfkCG"
+      ],
+      "name": "Featured Collections",
+      "settings": {
+        "heading": "Featured Collections"
+      }
+    },
+    "after_before_comparison_NT9wg4": {
+      "type": "after-before-comparison",
+      "blocks": {
+        "comparison_xeTNgp": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/before_1.jpg",
+            "after_image": "shopify://shop_images/after.png",
+            "before_label": "Before",
+            "after_label": "After"
+          }
+        },
+        "comparison_aUKfqr": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/before_1.jpg",
+            "after_image": "shopify://shop_images/after.png",
+            "before_label": "Before",
+            "after_label": "After"
+          }
+        },
+        "comparison_UmQqMx": {
+          "type": "comparison",
+          "settings": {
+            "before_image": "shopify://shop_images/before_1.jpg",
+            "after_image": "shopify://shop_images/after.png",
+            "before_label": "Before",
+            "after_label": "After"
+          }
+        }
+      },
+      "block_order": [
+        "comparison_xeTNgp",
+        "comparison_aUKfqr",
+        "comparison_UmQqMx"
+      ],
+      "name": "Image Comparison Preset",
+      "settings": {
+        "section_title": "Before & After Comparison",
+        "section_content": "Move the slider to compare the before and after images."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured_collections_3UztX9",
+    "after_before_comparison_NT9wg4"
+  ]
+}

@@ -1,0 +1,236 @@
+<div class="custom-cart-container">
+
+  <h1 class="cart-title">Your Cart</h1>
+
+  {% if cart.item_count > 0 %}
+
+  <form action="/cart" method="post" novalidate>
+
+    <div class="cart-items">
+
+      {% for item in cart.items %}
+
+      <div class="cart-item">
+
+        <!-- PRODUCT IMAGE -->
+        <div class="cart-item-image">
+          <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.product.title }}">
+        </div>
+
+        <!-- PRODUCT DETAILS -->
+        <div class="cart-item-details">
+
+          <h2 class="cart-product-title">
+            {{ item.product.title }}
+          </h2>
+          <p>
+            {{ item.variant.title }}
+          </p>
+          <p class="cart-price">
+            {{ item.price | money }}
+          </p>
+
+          <div class="cart-quantity">
+            {{ item.quantity }}
+          </div>
+
+          <p class="cart-line-total">
+            {{ item.line_price | money }}
+          </p>
+
+          <a
+            href="/cart/change?line={{ forloop.index }}&quantity=0"
+            class="cart-remove"
+          >
+            Remove
+          </a>
+
+        </div>
+
+      </div>
+
+      {% endfor %}
+
+    </div>
+
+    <!-- CART TOTAL -->
+    <div class="cart-summary">
+
+      <div class="cart-total">
+        <span>Total</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+
+      <div class="cart-buttons">
+
+        <button
+          type="submit"
+          name="update"
+          class="cart-update-btn"
+        >
+          Update Cart
+        </button>
+
+         <a  href='/checkout' class="cart-checkout-btn">
+            Checkout
+         </a>
+      </div>
+
+    </div>
+
+  </form>
+
+  {% else %}
+
+  <div class="cart-empty">
+    <p>Your cart is empty.</p>
+    <a href="/collections/all" class="continue-shopping">
+      Continue Shopping
+    </a>
+  </div>
+
+  {% endif %}
+
+</div>
+
+
+
+<style>
+
+.custom-cart-container{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 20px;
+}
+
+.cart-title{
+  font-size:32px;
+  font-weight:700;
+  margin-bottom:40px;
+}
+
+.cart-items{
+  display:flex;
+  flex-direction:column;
+  gap:30px;
+}
+
+.cart-item{
+  display:flex;
+  gap:30px;
+  padding:20px;
+  border:1px solid #eee;
+}
+
+.cart-item-image{
+  width:120px;
+}
+
+.cart-item-image img{
+  width:100%;
+}
+
+.cart-item-details{
+  flex:1;
+}
+
+.cart-product-title{
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+.cart-price{
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.cart-quantity{
+  margin-bottom:10px;
+}
+
+.cart-qty-input{
+  width:70px;
+  padding:6px;
+}
+
+.cart-line-total{
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.cart-remove{
+  color:red;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.cart-summary{
+  margin-top:40px;
+  padding-top:20px;
+  border-top:2px solid #eee;
+}
+
+.cart-total{
+  display:flex;
+  justify-content:space-between;
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.cart-buttons{
+  display:flex;
+  gap:15px;
+}
+
+.cart-update-btn{
+  padding:12px 25px;
+  border:1px solid #000;
+  background:#fff;
+  cursor:pointer;
+}
+
+.cart-checkout-btn{
+  padding:12px 25px;
+  background:#000;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+
+.cart-checkout-btn:hover{
+  background:#444;
+}
+
+.cart-empty{
+  text-align:center;
+  padding:100px 0;
+}
+
+.continue-shopping{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 25px;
+  background:#000;
+  color:#fff;
+  text-decoration:none;
+}
+
+@media(max-width:768px){
+
+.cart-item{
+  flex-direction:column;
+}
+
+.cart-item-image{
+  width:100%;
+  max-width:200px;
+}
+
+.cart-buttons{
+  flex-direction:column;
+}
+
+}
+
+</style>

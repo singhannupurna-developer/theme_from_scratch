@@ -1,0 +1,256 @@
+<style>
+.before-after-section {
+  background: #fff;
+  padding: 60px 0;
+}
+
+.ba-heading {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.ba-subheading {
+  text-align: center;
+  max-width: 720px;
+  margin: 8px auto 40px;
+  color: #555;
+}
+
+.ba-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ba-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Images */
+.ba-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* AFTER image revealed from right */
+.ba-img-after {
+  clip-path: inset(0 0 0 50%);
+  z-index: 2;
+}
+
+/* Divider */
+.ba-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background: #fff;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Center circle */
+.ba-line::before {
+  content: "";
+  width: 34px;
+  height: 34px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Arrows inside handle */
+.ba-arrow {
+  position: relative;
+  z-index: 2;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  pointer-events: none;
+}
+
+.ba-arrow.left {
+  padding-right: 3px;
+}
+
+.ba-arrow.right {
+  padding-left: 3px;
+} 
+
+/* Slider */
+.ba-range {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 4;
+}
+
+/* Labels */
+.ba-tag {
+  position: absolute;
+  top: 12px;
+  background: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  font-weight: 600;
+  z-index: 5;
+  transition: opacity 0.25s ease;
+}
+
+.ba-tag.left {
+  left: 12px;
+}
+
+.ba-tag.right {
+  right: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ba-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ba-heading {
+    font-size: 26px;
+  }
+}
+</style>
+
+<section class="before-after-section">
+  <div class="page-width">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="ba-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="ba-subheading">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    <div class="ba-grid">
+      {% for block in section.blocks %}
+        <div class="ba-container" {{ block.shopify_attributes }}>
+
+          <!-- BEFORE (base image) -->
+          <img
+            class="ba-img ba-img-before"
+            src="{{ block.settings.before_image | image_url: width: 900 }}"
+            alt="Before"
+            loading="lazy"
+          >
+
+          <!-- AFTER (revealed on right) -->
+          <img
+            class="ba-img ba-img-after"
+            src="{{ block.settings.after_image | image_url: width: 900 }}"
+            alt="After"
+            loading="lazy"
+          >
+
+          <span class="ba-tag left">{{ block.settings.before_label }}</span>
+          <span class="ba-tag right">{{ block.settings.after_label }}</span>
+
+          <input type="range" min="0" max="100" value="50" class="ba-range">
+
+          <div class="ba-line">
+            <span class="ba-arrow left">
+              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
+              <path d="M6.28065 0.21418L0.306839 5.33323C0.2106 5.41574 0.133349 5.5181 0.0803854 5.63327C0.0274221 5.74845 0 5.87371 0 6.00048C0 6.12725 0.0274221 6.25252 0.0803854 6.3677C0.133349 6.48287 0.2106 6.58523 0.306839 6.66774L6.28065 11.7868C6.85085 12.2753 7.73162 11.8703 7.73162 11.1195V0.879971C7.73162 0.129216 6.85085 -0.275825 6.28065 0.21418Z" fill="black"/>
+              </svg>
+            </span>
+            <span class="ba-arrow right">
+              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
+              <path d="M1.45098 0.21418L7.42479 5.33323C7.52103 5.41574 7.59828 5.5181 7.65124 5.63327C7.70421 5.74845 7.73163 5.87371 7.73163 6.00048C7.73163 6.12725 7.70421 6.25252 7.65124 6.3677C7.59828 6.48287 7.52103 6.58523 7.42479 6.66774L1.45098 11.7868C0.880774 12.2753 1.14441e-05 11.8703 1.14441e-05 11.1195V0.879971C1.14441e-05 0.129216 0.880774 -0.275825 1.45098 0.21418Z" fill="black"/>
+              </svg>
+            </span>
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".ba-container").forEach(container => {
+    const range = container.querySelector(".ba-range");
+    const afterImg = container.querySelector(".ba-img-after");
+    const line = container.querySelector(".ba-line");
+    const beforeTag = container.querySelector(".ba-tag.left");
+    const afterTag = container.querySelector(".ba-tag.right");
+
+    const updateUI = (value) => {
+      afterImg.style.clipPath = `inset(0 0 0 ${value}%)`;
+      line.style.left = value + "%";
+
+      beforeTag.style.opacity = value < 20 ? "0" : "1";
+      afterTag.style.opacity = value > 80 ? "0" : "1";
+    };
+
+    updateUI(range.value);
+
+    range.addEventListener("input", e => {
+      updateUI(e.target.value);
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Before After Comparison",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Transform Your Hair Instantly"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover stunning hair transformations, made possible with our premium hair extensions."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison",
+      "name": "Before / After Card",
+      "settings": [
+        { "type": "image_picker", "id": "before_image", "label": "Before Image" },
+        { "type": "image_picker", "id": "after_image", "label": "After Image" },
+        { "type": "text", "id": "before_label", "label": "Before Label", "default": "Before" },
+        { "type": "text", "id": "after_label", "label": "After Label", "default": "After" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Final Before After Images ",
+      "blocks": [
+        { "type": "comparison" },
+        { "type": "comparison" },
+        { "type": "comparison" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,128 @@
+<style>
+  .custom-header {
+    border-bottom: 1px solid #eee;
+    background: #fff;
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-logo img {
+    height: 40px;
+  }
+
+  .logo-text {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .header-nav {
+    flex: 1;
+    margin-left: 50px;
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item a {
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+  }
+
+  .nav-item a:hover {
+    color: #666;
+  }
+
+  .header-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .header-icon {
+    text-decoration: none;
+    font-size: 20px;
+    position: relative;
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 768px) {
+    .header-nav {
+      display: none;
+    }
+  }
+</style>
+
+<header class="custom-header">
+  <div class="header-container">
+    <!-- LOGO -->
+    <div class="header-logo">
+      <a href="{{ routes.root_url }}">
+        {% if settings.logo != blank %}
+          <img
+            src="{{ settings.logo | image_url: width: 200 }}"
+            alt="{{ shop.name }}"
+            class="logo-img"
+          >
+        {% else %}
+          <span class="logo-text">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="header-nav">
+      <ul class="nav-menu">
+        {% for link in linklists['main-menu'].links %}
+          <li class="nav-item">
+            <a href="{{ link.url }}">
+              {{ link.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <!-- HEADER ICONS -->
+    <div class="header-icons">
+      <!-- SEARCH -->
+      <a href="/search" class="header-icon"> 🔍 </a>
+
+      <!-- ACCOUNT -->
+      <a href="/account" class="header-icon"> 👤 </a>
+
+      <!-- CART -->
+      <a href="{{ routes.cart_url }}" class="header-icon cart-icon" id="header-cart-icon" >
+        🛒
+
+        {% if cart.item_count > 0 %}
+          <span class="cart-count">
+            {{ cart.item_count }}
+          </span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</header>

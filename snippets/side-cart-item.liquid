@@ -1,0 +1,155 @@
+<style>
+  .side-cart-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .side-cart-item__image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .side-cart-item__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .side-cart-item__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .side-cart-item__title {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000;
+  }
+
+  .side-cart-item__remove {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  .side-cart-item__variant {
+    font-size: 13px;
+    color: #777;
+  }
+
+  .side-cart-item__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .side-cart-item__qty {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+  }
+
+  .qty-btn {
+    border: none;
+    background: none;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+
+  .side-cart-item__qty input {
+    width: 40px;
+    border: none;
+    text-align: center;
+  }
+
+  .side-cart-item__price {
+    font-weight: 600;
+  }
+</style>
+<script>
+  document.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('qty-btn')) {
+      const line = e.target.dataset.line;
+      const input = e.target.parentElement.querySelector('input');
+
+      let qty = parseInt(input.value);
+
+      if (e.target.classList.contains('plus')) qty++;
+      if (e.target.classList.contains('minus')) qty--;
+
+      await fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          line: line,
+          quantity: qty,
+        }),
+      });
+
+      location.reload();
+    }
+  });
+</script>
+
+<div class="side-cart-item"  data-key="{{ item.key }}">
+  <!-- PRODUCT IMAGE -->
+  <div class="side-cart-item__image">
+
+
+    <img
+      src="{{ item.image | image_url: width: 200 }}"
+      alt="{{ item.product.title }}"
+      loading="lazy"
+      width="80"
+      height="80"
+    >
+  </div>
+
+  <!-- PRODUCT INFO -->
+  <div class="side-cart-item__info">
+    <div class="side-cart-item__top">
+      <a href="{{ item.url }}" class="side-cart-item__title">
+        {{ item.product.title }}
+      </a>
+      <button
+        class="side-cart-item__remove"
+        data-key="{{ item.key }}"
+        aria-label="Remove item"
+      >
+        ✕
+      </button>
+    </div>
+    {% unless item.variant.title == 'Default Title' %}
+      <p class="side-cart-item__variant">
+        {{ item.variant.title }}
+      </p>
+    {% endunless %}
+
+    <div class="side-cart-item__bottom">
+      <!-- QUANTITY -->
+      <div class="side-cart-item__qty">
+        <button class="qty-btn minus"  data-key="{{ item.key }}">−</button>
+        <input
+          type="number"
+          value="{{ item.quantity }}"
+          min="1"
+          data-key="{{ item.key }}"
+        >
+        <button class="qty-btn plus" data-key="{{ item.key }}">+</button>
+      </div>
+
+      <!-- PRICE -->
+      <div class="side-cart-item__price">
+        {{ item.final_line_price | money }}
+      </div>
+    </div>
+  </div>
+</div>

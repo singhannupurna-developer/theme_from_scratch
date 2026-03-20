@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "product_title_3Y9Q8b": {
+          "type": "product_title",
+          "settings": {}
+        },
+        "description_EUP4QX": {
+          "type": "description",
+          "settings": {}
+        },
+        "product_price_czNbB3": {
+          "type": "product_price",
+          "settings": {}
+        },
+        "add_to_cart_iLiRNX": {
+          "type": "add_to_cart",
+          "settings": {}
+        },
+        "easy_tabs_product_tabs_easytabs_block_product_widget_hfFgng": {
+          "type": "shopify://apps/easy-tabs-product-tabs/blocks/easytabs-block-product-widget/118e2a90-d31f-4cdf-b5c9-747e2bddd19a",
+          "settings": {
+            "placement_selector": "",
+            "multiple_widgets": true
+          }
+        }
+      },
+      "block_order": [
+        "product_title_3Y9Q8b",
+        "description_EUP4QX",
+        "product_price_czNbB3",
+        "add_to_cart_iLiRNX",
+        "easy_tabs_product_tabs_easytabs_block_product_widget_hfFgng"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

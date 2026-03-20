@@ -1,0 +1,43 @@
+
+<style>
+
+.page-container{
+  max-width:900px;
+  margin:auto;
+  padding:60px 20px;
+}
+
+.page-title{
+  font-size:36px;
+  font-weight:700;
+  margin-bottom:30px;
+  text-align:center;
+}
+
+.page-content{
+  font-size:16px;
+  line-height:1.7;
+}
+
+</style>
+
+
+<div class="page-container">
+
+  <!-- PAGE TITLE -->
+  <h1 class="page-title">
+    {{ page.title }}
+  </h1>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+    {{ page.content }}
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Main Page"
+}
+{% endschema %}

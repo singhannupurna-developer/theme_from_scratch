@@ -1,0 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {}
+    },
+    "side-cart": {
+      "type": "sidebar-drawer",
+      "settings":{}
+    },
+    "annoucement_bar_QRqxB8": {
+      "type": "annoucement-bar",
+      "name": "Announcement Bar",
+      "settings": {
+        "announcement_text": "Free shipping on all orders over $50!",
+        "announcement_link": ""
+      }
+    }
+  },
+  "order": [
+    "annoucement_bar_QRqxB8",
+    "header",
+    "side-cart"
+  ]
+}

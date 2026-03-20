@@ -1,0 +1,171 @@
+<script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
+<style>
+  .custom-product-wrapper {
+    display: flex;
+    gap: 60px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 60px 20px;
+    align-items: flex-start;
+  }
+
+  .custom-product-image {
+    width: 50%;
+  }
+
+  .custom-product-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .custom-product-details {
+    width: 50%;
+  }
+
+  .custom-product-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .custom-product-price {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .custom-product-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .custom-add-to-cart {
+    padding: 14px 32px;
+    background: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  .custom-add-to-cart:hover {
+    background: #444;
+  }
+
+  @media (max-width: 900px) {
+    .custom-product-wrapper {
+      flex-direction: column;
+    }
+
+    .custom-product-image,
+    .custom-product-details {
+      width: 100%;
+    }
+  }
+</style>
+<div class="custom-product-wrapper">
+  <!-- PRODUCT IMAGE -->
+  <div class="custom-product-image">
+    {% if product.has_only_default_variant %}
+      {{ product.featured_image | image_url: width: 1000 | image_tag: class: 'product-image' }}
+    {% else %}
+      {{
+        product.selected_or_first_available_variant.image
+        | image_url: width: 1000
+        | image_tag: class: 'product-image'
+      }}
+    {% endif %}
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="custom-product-details">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'product_title' %}
+          <h1 class="custom-product-title">
+            {{ product.title }}
+          </h1>
+
+        {% when 'product_price' %}
+          <div class="custom-product-price">
+            {% if product.selected_or_first_available_variant.compare_at_price
+                > product.selected_or_first_available_variant.price
+            %}
+              {{ product.price | money }}
+              <span class="product-info__price text--highlight">
+                {{- product.selected_or_first_available_variant.price | money -}}
+              </span>
+              <span class="product-info__compare-at-price text--strike text--subdued">
+                {{- product.selected_or_first_available_variant.compare_at_price | money -}}
+              </span>
+            {% else %}
+              <span class="product-info__price">{{ product.selected_or_first_available_variant.price | money }}</span>
+            {% endif %}
+          </div>
+
+        {% when 'add_to_cart' %}
+          {% form 'product', product %}
+            <variant-picker>
+              <select name="id">
+                {% for variant in product.variants %}
+                  <option
+                    value="{{ variant.id }}"
+                    {% if variant.selected_or_first_available_variant %}
+                      selected
+                    {% endif %}
+                  >
+                    {{ variant.title }}
+                  </option>
+                {% endfor %}
+              </select>
+            </variant-picker>
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+            <button class="custom-add-to-cart">Add to Cart</button>
+          {% endform %}
+        {% when '@app' %}
+          <!-- Render your app component here -->
+          <div class="custom-app-block">
+            {% render block %}
+          </div>
+        {% when 'description' %}
+          <p>
+            {{ product.description }}
+          </p>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Main Product",
+  "blocks": [
+    {
+      "type": "product_title",
+      "name": "Product Title"
+    },
+    {
+      "type": "product_price",
+      "name": "Product Price"
+    },
+    {
+      "type": "add_to_cart",
+      "name": "Add to Cart"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "description",
+      "name": "Description"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Info"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+<div class="custom-button-wrapper">
+
+  <a 
+    href="{{ section.settings.button_link }}" 
+    class="custom-button"
+    style="
+      background-color: {{ section.settings.button_color }} !important;
+      color: {{ section.settings.text_color }} !important;
+    "
+  >
+    {{ section.settings.button_text }}
+  </a>
+
+</div>
+
+
+<style>
+
+.custom-button-wrapper{
+  text-align:center;
+  padding:40px 0;
+}
+
+.custom-button{
+  display:inline-block;
+  padding:14px 32px;
+  text-decoration:none;
+  font-size:16px;
+  border-radius:4px;
+  transition:0.3s ease;
+}
+
+.custom-button:hover{
+  opacity:0.85;
+}
+
+</style>
+
+
+{% schema %}
+{
+  "name": "Custom Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Click Here"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Button"
+    }
+  ]
+}
+{% endschema %}

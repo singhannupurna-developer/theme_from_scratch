@@ -1,0 +1,84 @@
+<div class="announcement-bar">
+
+  <div class="announcement-inner">
+
+    {% if section.settings.announcement_link != blank %}
+      <a href="{{ section.settings.announcement_link }}" class="announcement-text">
+        {{ section.settings.announcement_text }}
+      </a>
+    {% else %}
+      <span class="announcement-text">
+        {{ section.settings.announcement_text }}
+      </span>
+    {% endif %}
+
+    <button class="announcement-close" onclick="this.parentElement.parentElement.style.display='none'">
+      ×
+    </button>
+
+  </div>
+
+</div>
+
+<style>
+
+.announcement-bar{
+  background:#000;
+  color:#fff;
+  text-align:center;
+  font-size:14px;
+}
+
+.announcement-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:10px 20px;
+  position:relative;
+}
+
+.announcement-text{
+  color:#fff;
+  text-decoration:none;
+}
+
+.announcement-text:hover{
+  text-decoration:underline;
+}
+
+.announcement-close{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Free shipping on all orders over $50!"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Announcement Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+<html>
+  <head>
+    {{ content_for_header }}
+    {%  style %}
+      {{ settings.heading_font | font_face:font_display : 'swap' }}
+      {{ settings.body_font | font_face:font_display:  : 'swap' }}
+      :root {
+        --font-heading-family: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+        --font-body-family: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+        --font-body-style: {{ settings.body_font.style }};
+      }
+    {% endstyle %}
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}" type="text/css" media="all">
+     {{ 'theme.css' | asset_url | stylesheet_tag }}
+     
+    <script src="{{ 'shopify-money.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+       <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </head>
+  <body>
+    {% sections 'header-group' %}
+    {{ content_for_layout }}
+  </body>
+</html>
