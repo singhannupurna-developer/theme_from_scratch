@@ -1,0 +1,84 @@
+<style>
+  .basic-render {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+  }
+</style>
+
+<div class="basic-render">
+  <button data-render class="button">Render</button>
+</div>
+
+{% comment %}
+  <script>
+      const button = document.querySelector('[data-render]');
+      button.addEventListener('click',()=>{
+         fetch(`${window.Shopify.routes.root}?sections=hello-world,product-list`)
+         .then((response) => {
+          return(response.json())
+        })
+        .then((data) => {
+          // console.log(data);
+          const tempDiv=document.createElement('div');
+          tempDiv.innerHTML=data["hello-world"];
+          console.log(tempDiv);
+          document.querySelector('.basic-render').innerHTML=tempDiv.querySelector('.welcome').innerHTML;
+          document.querySelector('.basic-render').innerHTML=tempDiv.querySelector('.product-list').innerHTML;
+
+
+      })
+      })
+  </script>
+{% endcomment %}
+
+<script>
+  const button = document.querySelector('[data-render]');
+
+  button.addEventListener('click', () => {
+    {% comment %} fetch(`${window.Shopify.routes.root}?sections=hello-world,product-list`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+
+        const container = document.querySelector('.basic-render');
+        container.innerHTML = ''; // clear first
+
+        // 👉 HELLO WORLD SECTION
+        if (data["hello-world"]) {
+          const div1 = document.createElement('div');
+          div1.innerHTML = data["hello-world"];
+          container.appendChild(div1);
+        }
+
+        // 👉 PRODUCT LIST SECTION
+        if (data["product-list"]) {
+          const div2 = document.createElement('div');
+          div2.innerHTML = data["product-list"];
+          container.appendChild(div2);
+        }
+      })
+      .catch((err) => console.error(err));
+  }); {% endcomment %}
+    fetch(`${window.Shopify.routes.root}/products/test-1?section=product`)
+      .then((res) => res.json())
+      .then((data) => {
+        document.querySelector('.basic-render').innerHTML =
+          data["product"];
+      });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Section Render",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Section Render"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,116 @@
+<section class="image-content-section">
+  <div class="container">
+    <div class="image-content-wrapper">
+      <!-- Left: Image -->
+      <div class="image-block">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0741/9681/1821/files/before_1.jpg?v=1773990019"
+          loading="lazy"
+        >
+      </div>
+
+      <!-- Right: Content -->
+      <div class="content-block">
+        {% if section.settings.title != blank %}
+          <h2>{{ section.settings.title }}</h2>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <p class="welcome">{{ section.settings.text }}</p>
+        {% endif %}
+
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="btn">
+            {{ section.settings.button_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .image-content-section {
+    padding: 60px 20px;
+  }
+
+  .image-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .image-block img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+  }
+
+  .content-block {
+    max-width: 500px;
+  }
+
+  .content-block h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+  }
+
+  .content-block p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .image-content-wrapper {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Image with Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Your Heading Here"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Write something about your product or service here."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Content"
+    }
+  ]
+}
+{% endschema %}

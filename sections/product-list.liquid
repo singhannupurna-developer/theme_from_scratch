@@ -1,0 +1,135 @@
+<section class="product-list-section product-list" id="product-list">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <h2 class="section-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="product-grid">
+      {% assign collection = collections.all %}
+      {% if collection.products_count > 0 %}
+        {% for product in collection.products limit: 4 %}
+          <div class="product-card">
+            <!-- Product Image -->
+            <a href="{{ product.url }}">
+              <img
+                src="{{ product.featured_image | image_url: width: 400 }}"
+                alt="{{ product.title | escape }}"
+                loading="lazy"
+              >
+            </a>
+
+            <!-- Product Info -->
+            <div class="product-info">
+              <h3 class="product-title">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+              </h3>
+
+              <p class="product-price">
+                {{ product.price | money }}
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+
+      {% else %}
+        <p>No products found</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-list-section {
+    padding: 60px 20px;
+  }
+
+  .section-heading {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .product-card {
+    text-align: center;
+  }
+
+  .product-card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .product-title {
+    font-size: 18px;
+    margin: 10px 0 5px;
+  }
+
+  .product-title a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .product-price {
+    color: #555;
+    font-size: 16px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<script>
+  fetch('/collections/all/products.json?limit=20')
+    .then((res) => res.json())
+    .then((data) => {
+      const shuffled = data.products.sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 4);
+
+      let html = '';
+
+      selected.forEach((product) => {
+        html += `
+        <div class="product-card">
+          <img src="${product.images[0]?.src}" />
+          <h3>${product.title}</h3>
+          <p>₹${product.variants[0].price}</p>
+        </div>
+      `;
+      });
+
+      document.querySelector('.product-grid').innerHTML = html;
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Product List",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Our Products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product List"
+    }
+  ]
+}
+{% endschema %}

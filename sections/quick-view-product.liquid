@@ -1,0 +1,115 @@
+<style>
+  .quick-product .custom-product-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+  .quick-product .product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .quick-product .custom-product-image {
+    width: 50%;
+  }
+  .quick-product .custom-product-details {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quick-product .custom-product-title {
+    font-weight: 700;
+    font-size: 25px;
+  }
+  .quick-product .product-info__price {
+    color: #000;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .quick-product .custom-add-to-cart {
+    margin-top: 20px;
+  }
+</style>
+<div class="quick-product">
+  {% comment %}
+    <h2>{{ product.title }}</h2>
+    <img src="{{ product.featured_image | image_url: width: 500 }}">
+    <p>{{ product.price | money }}</p>
+    <p>{{ product.description }}</p>
+  {% endcomment %}
+  <div class="custom-product-wrapper">
+    <!-- PRODUCT IMAGE -->
+    <div class="custom-product-image">
+      {% if product.has_only_default_variant %}
+        {{ product.featured_image | image_url: width: 1000 | image_tag: class: 'product-image' }}
+      {% else %}
+        {{
+          product.selected_or_first_available_variant.image
+          | image_url: width: 1000
+          | image_tag: class: 'product-image'
+        }}
+      {% endif %}
+    </div>
+
+    <!-- PRODUCT DETAILS -->
+    <div class="custom-product-details">
+      <h1 class="custom-product-title">
+        {{ product.title }}
+      </h1>
+      <div class="custom-product-price">
+        {% if product.selected_or_first_available_variant.compare_at_price
+            > product.selected_or_first_available_variant.price
+        %}
+          {{ product.price | money }}
+          <span class="product-info__price text--highlight">
+            {{- product.selected_or_first_available_variant.price | money -}}
+          </span>
+          <span class="product-info__compare-at-price text--strike text--subdued">
+            {{- product.selected_or_first_available_variant.compare_at_price | money -}}
+          </span>
+        {% else %}
+          <span class="product-info__price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        {% endif %}
+      </div>
+      {% comment %} <p>{{ product.description }}</p> {% endcomment %}
+      {% form 'product', product %}
+        <variant-picker>
+          <select name="id">
+            {% for variant in product.variants %}
+              <option
+                value="{{ variant.id }}"
+                {% if variant.selected_or_first_available_variant %}
+                  selected
+                {% endif %}
+              >
+                {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+        </variant-picker>
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button class="custom-add-to-cart">Add to Cart</button>
+      {% endform %}
+
+      <!-- Render your app component here -->
+      {% comment %}
+        <div class="custom-app-block">
+          {% render block %}
+        </div>
+      {% endcomment %}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Quick View",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Quick View"
+    }
+  ]
+}
+{% endschema %}

@@ -1,4 +1,6 @@
 <script src="{{ 'collection-filter.js' | asset_url }}" defer></script>
+<script src="{{ 'quick-view.js' | asset_url }}" defer></script>
+
 <style>
     .collection-page {
       max-width: 1200px;
@@ -337,11 +339,18 @@
             <p class="product-price">
               {{ product.price | money }}
             </p>
-            {% form 'product', product %}
-              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-              <button class="custom-add-to-cart">Add to Cart</button>
-            {% endform %}
+            {% comment %}
+              {% form 'product', product %}
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <button class="custom-add-to-cart">Add to Cart</button>
+              {% endform %}
+            {% endcomment %}
           </a>
+          <div class="collection-product__quick-view">
+            <button data-quick-view data-product-handle="{{ product.handle }}" class="button custom-add-to-cart">
+              Quick View
+            </button>
+          </div>
         </div>
       {% endfor %}
     </div>
